@@ -1,7 +1,7 @@
-puts 'Hello, what\'s your name?'
-name = gets.chomp
-puts 'Hello, ' + name + '.'
-
-if    name == 'Chris' || name == 'Katy'
-  puts 'What a lovely name!'
+def say_moo number_of_moos
+  puts 'moooooo...' * number_of_moos
 end
+
+ret_val = say_moo(4)
+
+puts ret_val
