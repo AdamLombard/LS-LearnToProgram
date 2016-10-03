@@ -1,39 +1,23 @@
-M = 'land'
-o = 'water'
+require 'yaml'
 
-world = [ [o,o,o,o,o,M,o,o,o,o,o],
-          [o,o,o,o,M,M,o,o,o,o,o],
-          [o,o,o,o,o,o,o,o,M,M,o],
-          [o,o,o,M,o,o,o,o,o,M,o],
-          [M,o,o,M,o,M,M,o,o,o,o],
-          [o,o,o,o,M,M,M,M,o,o,o],
-          [o,o,o,M,M,M,M,M,M,M,o],
-          [o,o,o,M,M,o,M,M,M,o,M],
-          [o,o,o,o,o,o,M,M,o,o,o],
-          [o,M,o,o,o,M,o,o,o,o,o],
-          [o,o,o,o,o,M,o,o,o,o,o]]
+test_array = ['Give Quiche a Chance',
+              'Mutants Out!',
+              'Chameleonic Life-Forms, No Thanks',
+              '42',
+              [1,2,'three'],
+              'hello']
 
-def continent_size world, x, y
-  square = world[y][x] rescue 'AHHHHHhhhhhhh.....'
+test_string = test_array.to_yaml
 
-  if square != 'land'
-    return 0
-  end
+filename = 'yaml_test.txt'
 
-  size = 1
-  world[y][x] = 'counted land'
-
-  size = size + continent_size(world, x-1, y-1)
-  size = size + continent_size(world, x,   y-1)
-  size = size + continent_size(world, x+1, y-1)
-  size = size + continent_size(world, x-1, y  )
-
-  size = size + continent_size(world, x+1, y  )
-  size = size + continent_size(world, x-1, y+1)
-  size = size + continent_size(world, x  , y+1)
-  size = size + continent_size(world, x+1, y+1)
-
-  size
+File.open filename, 'w' do |f|
+  f.write test_string
 end
 
-puts continent_size(world, 5, 5)
+read_string = File.read filename
+
+read_array  = YAML::load read_string
+
+puts(read_string  == test_string)
+puts(read_array   == test_array)
